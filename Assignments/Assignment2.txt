@@ -1,0 +1,74 @@
+Assignment-2 for SQL Server Topics that will cover are  Insert, DML: update delete, DQL: select , SQL Constraints: FOREIGN KEY, Primary key, check
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) Create Database with name: Employee
+
+2) create a table with name: EmployeeDetails with following columns    
+ EMP_ID with integer datatype, notnull, primarykey and auto incremented
+ FIRST_NAME:varchar it should not be null ,  LAST_NAME: varchar , SALARY: money , JOINING_DATE: date , DEPARTMENT:varchar, AGE: integer age should not less that 21
+
+ 
+3) Insert following data into table: EmployeeDetails 
+EMP_ID 		FIRST_NAME	LAST_NAME	SALARY	JOINING_DATE	DEPARTMENT AGE
+1		Monika		Arora		100000	2015-02-20 	HR	   25
+2		Niharika	Verma		80000	2018-06-11 	Admin	   29
+3		Vishal		Singhal		300000	2012-02-20 	HR	   30
+4		Amitabh		Singh		500000	2009-02-20	Admin	   22
+5		Vivek		Bhati		500000	2017-06-11 	Admin	   55
+6		Vipul		Diwan		200000	2017-06-11 	Account    43
+7		Satish		Kumar		75000	2018-01-20 	Account	   27
+8		Geetika		Chauhan		90000	2020-04-11 	Admin	   50
+9		Harry		null		110000	2007-06-11 	Admin	   50
+
+4) Insert following data into table: EmployeeDetails 
+EMP_ID 		FIRST_NAME	LAST_NAME	SALARY	JOINING_DATE	DEPARTMENT 	AGE
+10		Nithesh 	Pandey		100000	2014-02-20 	IT Department	20
+
+5)try to Insert following data into table: EmployeeDetails 
+EMP_ID 		FIRST_NAME	LAST_NAME	SALARY	JOINING_DATE	DEPARTMENT 	AGE
+11		null		Simha Reddy	9000	2020-02-20 	Admin		22
+
+5)  create a table of name Bonus which is having columns: WORKER_REF_ID :Interger FOREIGN KEY,  BONUS_AMOUNT :amount , BONUS_DATE: date 
+
+6) Insert following data into table: Bonus
+WORKER_REF_ID	BONUS_DATE	BONUS_AMOUNT
+1		2016-02-20 	5000
+2		2016-06-11 	3000
+3		2016-02-20	4000
+1		2016-02-20 	4500
+2		2016-06-11 	3500
+
+7) create a table: Title of name which is having coloums: WORKER_REF_ID Integer and take as FOREIGN KEY, WORKER_TITLE varchar, AFFECTED_FROM date, 
+
+8) Insert following data into table: Title
+
+WORKER_REF_ID	WORKER_TITLE	AFFECTED_FROM
+1		Manager		2016-02-20 
+2		Executive	2017-08-15
+8		Executive	2020-01-01
+5		Manager		2016-06-11
+4		Asst. Manager	2016-06-11 
+7		Executive	2000-11-15
+6		Lead		2016-06-11
+3		Lead		2016-06-11 
+
+
+9) Display all records from table: EmployeeDetails 
+10) Write a query to display firstname, lastname and department from EmployeeDetails.
+11) update the table EmployeeDetails with LAST_NAME as nayak having Empployee id 5 .
+12) Delete Employee record with having employee id as 9.
+13) update the date to today's date of Bonus table with id as 3.
+14) Display all records from Title table.
+15 display all records from Bonus table.
+
+
+
+
+
+
+
+
+
+
+
+

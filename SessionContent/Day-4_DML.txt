@@ -1,0 +1,92 @@
+﻿DML- Data Manipulation Langauge
+
+Commands that deals with the manipulation of data present in the database.
+The command of DML is not auto-committed that means it can't permanently save all the changes in the database. They can be rollback.
+Commands: Insert, Update, Delete.
+-------------------------------------------------------------
+INSERT
+ 
+INSERT statement is used to insert data into the row of a table.
+
+Syntax-1
+INSERT INTO <tbname>  (col1, col2, col3)  VALUES (value1, value2, value3);  
+Example 
+INSERT Into StudentInfo (StudentId,StudentName,DOB,Phone) VALUES ('1', 'Ayodhya', '2010-05-06', '7788766567')
+
+
+Syntax-2 
+INSERT INTO  <tbname>   VALUES (value1, value2, value3);  
+Example
+INSERT Into StudentInfo  VALUES ('1', 'Alex', '2010-05-06', '7788766567')
+
+-------------------------------------------------------------
+Update
+
+UPDATE statement is used to modify the data that is already in the database. 
+The condition in the WHERE clause decides that which row is to be updated.
+
+Syntax with where condition
+UPDATE <table name> SET column1 = value1,  column2 = value2 WHERE condition;
+Example
+UPDATE StudentInfo SET DOB='2019-02-03' where StudentName='Alex‘
+
+Syntax without where clause
+UPDATE  <tb name> SET  column1 = value1    // it is not recomended because it will update through out the table
+-------------------------------------------------------------
+
+Alter Vs Update
+
+Alter 	
+Alter comes under DDL command
+ALTER command add, delete, modify the attributes of a table  or  it used to modify metadata of a database.	
+Syntax: ALTER TABLE table_name ADD column_name datatype;
+
+Update 
+Update is in DML commands 
+UPDATE Command modifies one or more records in the table. 
+Syntax: UPDATE table_name SET column_name1 = value, column_name2 = value where some condition; 
+
+-------------------------------------------------------------
+
+Delete
+
+The DELETE statement is used to delete existing records in a table.
+Syntax
+DELETE FROM table_name WHERE condition;
+Example
+DELETE from StudentInfo where StudentName='Alex';
+
+Syntax for deleting all records
+DELETE FROM table_name;
+Example: 
+DELETE FROM  StudentInfo ;
+
+-------------------------------------------------------------
+
+Difference between delete, truncate
+
+delete
+It is used to delete specific data, because we can use where clause for delete.
+It locks the table row before deleting the row 
+Delete is a DML Command
+We can use where clause
+We can rollback our changes.
+It is slower than Truncate
+Syntax: 
+DELETE FROM <table_name>
+DELETE FROM <table_name> WHERE <some condition>
+
+Truncate
+It is used to delete the entire data of the table .
+It Locks complete table at a time.
+Delete is a DDL Command
+We can not use where clause
+We can’t rollback the changes.
+Truncate is faster than Delete.
+TRUNCATE TABLE table_name 
+
+
+
+
+
+

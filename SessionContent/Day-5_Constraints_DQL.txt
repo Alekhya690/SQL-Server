@@ -1,0 +1,209 @@
+SQL Constraints
+
+Constraints are the rules and restrictions applied on a column or a table such that unwanted data can't be inserted into tables. 
+This ensures the accuracy and reliability of the data in the database. 
+We can create constraints on single or multiple columns of any table. 
+Constraints maintain the data integrity and accuracy in the table.
+Constraints are used to limit the type of data that can go into a table. 
+
+MS SQL supports following types of constraints 
+
+Table Types Constraints
+NOT NULL
+PRIMARY KEY
+UNIQUE
+FOREIGN KEY
+
+Column Types Constraints
+CHECK
+-------------------------------------------------------
+Table Types Constraints
+These are the constraints which will be applied for complete table
+
+1) NOT NULL
+The NOT NULL constraint enforces a column to NOT accept NULL values.
+
+Example
+
+CREATE TABLE StudentInfor (
+ID int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255) NOT NULL,
+Age int
+);
+
+while inserting data in to about table null value wont accept.
+-----------------------------------------------------
+PRIMARY KEY
+
+The PRIMARY KEY constraint uniquely identifies each record in a table.
+Primary keys must contain UNIQUE values, and cannot contain NULL values.
+A table can have only ONE primary key; and in the table, this primary key can consist of single or multiple columns (fields).
+
+Syntax of primary key for 1 column
+CREATE TABLE table_name (
+ 	column1 datatype  NOT NULL PRIMARY KEY , 
+	column2 datatype NOT NULL );
+Example1
+CREATE TABLE <tbname> (
+ID int NOT NULL PRIMARY KEY,
+LastName varchar(255) NOT NULL,
+Age int
+);
+
+Syntax of primary key for more than column
+
+CREATE TABLE table_name ( 
+	 column1 datatype NOT NULL,
+	 column2 datatype NOT NULL, 
+	 CONSTRAINT constraint_name PRIMARY KEY (column1, column2) );
+Example2
+CREATE TABLE  <tbname> (
+ID int NOT NULL,
+LastName varchar(255) NOT NULL,
+Age int,
+CONSTRAINT PK_Person PRIMARY KEY (ID,LastName));
+-----------------------------------------------------------------
+UNIQUE Constraint
+
+The UNIQUE constraint ensures that all values in a column are different.
+
+Example
+CREATE TABLE Persons (ID int NOT NULL UNIQUE,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Age int
+);
+Example of UNIQUE constraint on ALTER TABLE: ALTER TABLE Persons ADD UNIQUE (ID);
+
+-----------------------------------------------------------------
+Check
+
+The CHECK constraint is used to limit the value range that can be placed in a column.
+Example
+CREATE TABLE Persons (
+ID int NOT NULL,
+LastName varchar(255) NOT NULL,
+FirstName varchar(255),
+Age int CHECK (Age>=18));
+
+-----------------------------------------------------------------
+
+DQL (Data Query Language)
+
+DQL is used to fetch the data from the database.
+Command: Select
+
+SELECT
+It is used to select the attribute based on the condition described by WHERE clause.
+
+Syntax
+To fetch the entire table or all the fields in the table: 
+SELECT * FROM table_name;
+SELECT * FROM table_name where <some condition>;
+
+Query to fetch specified column in a table
+Select <column1, column 2> from <tbname>
+SELECT <column1, column 2> FROM table_name where <some condition>;
+--------------------------------------------
+
+CREATE DATABASE STUDENT
+USE STUDENT;
+Create table StudentInfo(
+StudentID int NOT NULL PRIMARY KEY,
+name varchar(225),
+phone bigint
+);
+
+Select * from StudentInfo
+Select * from StudentInfo where StudentID='3'
+
+Select name, phone from StudentInfo
+Select name, phone from StudentInfo where name='suresh'
+
+Create table Course(
+CourseID int NOT NULL PRIMARY KEY,
+name varchar(225),
+phone bigint,
+StudentID int FOREIGN KEY REFERENCES StudentInfo(StudentID)
+
+);
+
+Create table StudentInfo1(
+StudentID int NOT NULL PRIMARY KEY,
+name varchar(225),
+phone bigint,
+age int CHECK (age>=18)
+);
+
+Create table StudentInfo2(
+StudentID int NOT NULL PRIMARY KEY,
+name varchar(225) CHECK (name='Alekhya'),
+phone bigint,
+age int 
+);
+select * from StudentInfo2
+Insert into  StudentInfo2 Values('11','Alex', '7765432654', '18' )
+Insert into  StudentInfo2 Values('1','Alekhya', '7765432654', '20' )
+
+Select * from StudentInfo1
+Insert into  Course Values('11','SQL SERVER', '7765432654', '1' )
+Insert into  Course Values('22','JAVA', '7765432654', '1' )
+Insert into  Course Values('33','React', '7765432654', '2' )
+Insert into  Course Values('44','React', '7765432654', '9' )
+Insert into  StudentInfo Values('3','Naresh', '7765432654' )
+
+select * from StudentInfo
+
+Create table Test(
+StudentID int NOT NULL PRIMARY KEY,
+name varchar(225),
+phone bigint
+);
+
+Create table Test3(
+StudentID int NOT NULL PRIMARY KEY,
+name varchar(225),
+phone bigint
+);
+
+Insert into  Test Values('1','Rama', '7765432654' )
+Insert into  Test Values('2','Alex', '9965432654' )
+
+Create table Test1(
+StudentID int NOT NULL,
+name varchar(225),
+phone bigint,
+CONSTRAINT PK_Test1 PRIMARY KEY (StudentID, name)
+);
+
+
+----------------------------------------------------------------------------
+Insert into  Test1 Values('1','geetha', '7765432654' )
+
+CREATE TABLE Persons (    
+ID int NOT NULL UNIQUE,    
+LastName varchar(255) NOT NULL,    
+FirstName varchar(255),    
+Age int);
+
+Insert into  Persons Values('1','Rama', 'krishna','20' )
+Insert into  Persons Values('2','Lakshmi', 'Sai','14' )
+Insert into  Persons Values('3','pradeep', 'Varma', '40' )
+Insert into  Persons Values('4','siva', 'Kiran', '25' )
+
+select * from Persons where age <=20
+
+CREATE TABLE Persons1 (    
+ID int NOT NULL,    
+Name varchar(255) NOT NULL,        
+Age int CHECK (Age>=18));
+
+INsert into Persons1 VALUES ('1', 'Rohan', '20')
+
+
+
+
+
+
+

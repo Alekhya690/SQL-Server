@@ -1,0 +1,103 @@
+Clauses in SQL Server
+There are five types of clauses in SQL Server. 
+They are Order By Clause, Top Clause, Where Clause, Group By Clause, and Having Clause.
+-------------------------------------------------------------------
+Order By
+
+Order By used to sort the data, either in Ascending or Descending order.
+It sorts the records in ascending order by default.
+
+Keywords
+ASC: It is used to sort the result set in ascending order by expression.
+DESC: It sorts the result set in descending order by expression.
+
+Syntax
+
+SELECT column1, column2  
+FROM table_name  
+WHERE condition  
+ORDER BY column1, column2... ASC|DESC;  
+-------------------------------------------------------------------
+TOP
+
+The SQL TOP clause is used to limit the number of rows that are returned by a query.
+Syntax
+	SELECT TOP number | percent column_name(s) FROM table_name WHERE condition;
+Example
+	SELECT TOP 3 * FROM StudentInfo;
+	SELECT TOP 50 PERCENT * FROM StudentInfo;
+Example with where clause
+SELECT TOP 3 * FROM StudentInfo WHERE name='Harry';
+SELECT TOP 50 PERCENT * FROM StudentInfo WHERE name='Harry';
+
+--------------------------------------------------------------------
+
+where clause
+
+The SQL WHERE Clause is used to restrict the number of rows (or records) returned by the SELECT Statement. 
+It returns the records only If the condition specified after the SQL WHERE keyword is TRUE.
+Syntax
+SELECT <Column Names> FROM <Tb name> WHERE <Conditions>
+Example
+Select * from table name where name='Harry‘;
+
+--------------------------------------------------------------------
+
+GROUP BY
+
+SQL GROUP BY statement is used to arrange identical data into groups. The GROUP BY statement is used with the SQL SELECT statement.
+The GROUP BY statement follows the WHERE clause in a SELECT statement and precedes the ORDER BY clause.
+The GROUP BY statement is used with aggregation function.
+
+Aggregation function
+SUM, MIN, AVG, MAX, and COUNT
+SUM - Calculates the sum of values in column.
+MIN- Gets the minimum value in a set of values.
+MAX- Gets the maximum value in a set of values.
+AVG - Calculates the average of a set of values.
+COUNT- It gives the Count of a specified column 
+
+Syntax for Group By
+SELECT column  FROM table_name  WHERE conditions GROUP BY column  ORDER BY column;
+
+Example – Count
+SELECT Name, COUNT(*)  FROM details  GROUP BY Name;
+SELECT COUNT(*), Name FROM details GROUP BY Name ORDER BY COUNT(*) DESC;
+AVG
+SELECT Department, AVG(Salary) as Salary  FROM details  GROUP BY Department;
+MIN
+SELECT Department, MIN(Salary) as Salary  FROM details  GROUP BY Department
+MAX
+SELECT Department, MAX(Salary) as Salary  FROM details  GROUP BY Department
+
+---------------------------------------------------------------------------
+
+Having
+
+In Having we will define a condition, based on that condition query will get executed.
+The HAVING clause is often used with the GROUP BY clause to filter groups based on a specified condition.
+Like GROUP BY, having is also uses Aggregation function
+
+Syntax
+
+SELECT * FROM <table_name> GROUP BY <group_list> HAVING <conditions>;
+SUM
+
+SELECT Department, SUM(Salary) AS "Total Salary“ FROM details
+    GROUP BY department HAVING SUM(Salary) >= 5000;
+
+MIN
+SELECT Department, MIN(Salary) AS "MIN Salary“ FROM details
+    GROUP BY department HAVING MIN(Salary) <= 4000;
+MAX
+SELECT Department, MAX(Salary) AS “Maximum Salary“ FROM details GROUP BY department HAVING MAX(Salary) <= 4000;
+AVG
+SELECT Department, AVG(Salary) AS "Avg Salary“ FROM details
+    GROUP BY department HAVING AVG(Salary) > 5000;
+
+
+
+
+
+
+

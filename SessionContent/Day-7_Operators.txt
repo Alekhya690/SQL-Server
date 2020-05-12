@@ -1,0 +1,141 @@
+SQL Operators
+
+SQL operators are reserved keywords used in the WHERE clause of a SQL statement to perform arithmetic, logical and comparison operations. 
+Operators act as conjunctions in SQL statements to fulfill multiple conditions in a statement.
+
+Types of SQL Server Operators
+
+Arithmetic Operators
+Assignment Operator
+Comparison Operators
+Logical Operators
+String Concatenation Operator
+
+
+---------------------------------------------------------------
+Arithmetic Operators
+
+Let's assume two variables "a" and "b". Here "a" is valued 50 and "b" valued 100.
+
+Operators	Descriptions								Examples
++	It is used to add containing values of both operands				a+b will give 150
+-	It subtracts right hand operand from left hand operand				a-b will give -50
+*	It multiply both operand's values						a*b will give 5000
+/	It divides left hand operand by right hand operand				b/a will give 2
+%	It divides left hand operand by right hand operand and returns reminder		b%a will give 0
+
+Example 
+SELECT Name, Department, Salary, Salary - 100 AS "Salary - 100" FROM details;
+
+---------------------------------------------------------------
+Assignment Operator
+
+= comes under this operator.
+Example
+Select FirstColumnHeading=Name , SecondColumnHeading= Department from details
+
+---------------------------------------------------------------
+
+Assignment Operator
+
+Let's take two variables "a" and "b" that are valued 50 and 100.
+
+Operator	Description												Example
+=	Examine both operands value that are equal or not,if yes condition become true.					(a=b) is not true
+!=	This is used to check the value of both operands equal or not,if not condition become true.			(a!=b) is true
+< >	Examines the operand's value equal or not, if values are not equal condition is true				(a<>b) is true
+>	Examine the left operand value is greater than right Operand, if yes condition becomes true			(a>b) is not true
+<	Examines the left operand value is less than right Operand, if yes condition becomes true			(a<b)
+>=	Examines that the value of left operand is greater than or equal to the value of right operand or not,if yes condition become true	(a>=b) is not true
+<=	Examines that the value of left operand is less than or equal to the value of right operand or not, if yes condition becomes true	(a<=b) is true
+!<	Examines that the left operand value is not less than the right operand value					(a!
+!>	Examines that the value of left operand is not greater than the value of right operand				(a!>b) is true
+
+<> or !=
+ It checks whether operands are equal are not.  If the values are not equal returns true.
+Example
+SELECT * FROM details WHERE Name <> 'Harry';
+
+!< -->  not less than
+SELECT * FROM details WHERE Salary !< 10000;
+
+---------------------------------------------------------------
+
+SQL Logical Operators
+
+ALL	this is used to compare a value to all values in another value set.
+AND	this operator allows the existence of multiple conditions in an SQL statement.
+ANY	this operator is used to compare the value in list according to the condition.
+BETWEEN	this operator is used to search for values, that are within a set of values
+IN	this operator is used to compare a value to that specified list value
+NOT	the NOT operator reverse the meaning of any logical operator
+OR	this operator is used to combine multiple conditions in SQL statements
+EXISTS	the EXISTS operator is used to search for the presence of a row in a specified table
+LIKE	this operator is used to compare a value to similar values using wildcard operator
+
+
+ANY and ALL Operators
+
+These are used with a WHERE or HAVING clause.
+ANY:  Operator returns true if any of the sub query values meet the condition.
+ALL: Operator returns true if all of the sub query values meet the condition.
+
+Example for ANY
+SELECT * FROM details WHERE age = ALL (Select age from details where age = 25)
+SELECT name FROM details WHERE age = ANY (Select age from details where age > 20)
+
+Between
+
+The BETWEEN operator selects values within a given range.
+Syntax
+SELECT column_name(s) FROM table_nameWHERE column_name BETWEEN value1 AND value2;
+Example
+SELECT * FROM details WHERE age BETWEEN 39 AND 42;
+
+
+IN Operator
+
+The IN operator allows you to specify multiple values in a WHERE clause.
+Syntax
+SELECT column_name(s) FROM table_nameWHERE column_name IN (value1, value2, ...);
+SELECT column_name(s) FROM table_nameWHERE column_name IN (SELECT STATEMENT);
+Example
+SELECT * FROM details WHERE name IN ('Harry', 'John' );
+SELECT * FROM details WHERE name NOT IN ('Harry', 'John' );
+SELECT * FROM details WHERE name  IN (SELECT Name FROM StudentInfo);
+
+EXISTS Operator
+
+The EXISTS operator is used to test for the existence of any record in a sub query.
+It returns true if the sub query returns one or more records.
+Syntax
+SELECT column_name(s) FROM table_nameWHERE EXISTS (SELECT column_name FROM table_name WHERE condition);
+Example
+SELECT  name,Salary, Department FROM details WHERE EXISTS (SELECT name FROM StudentInfo WHERE details.Name = StudentInfo.name AND age > 20);
+
+LIKE
+
+The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+There are two wildcards often used in conjunction with the LIKE operator:
+% --> The percent sign represents zero, one, or multiple characters
+_ --> The underscore represents a single character
+
+Syntax
+SELECT column1, column2, FROM table_nameWHERE columnN LIKE pattern;
+
+LIKE Operator				Description
+WHERE CustomerName LIKE 'a%'		Finds any values that start with "a"
+WHERE CustomerName LIKE '%a'		Finds any values that end with "a"
+WHERE CustomerName LIKE '%or%'		Finds any values that have "or" in any position
+WHERE CustomerName LIKE '_r%'		Finds any values that have "r" in the second position
+WHERE CustomerName LIKE 'a_%'		Finds any values that start with "a" and are at least 2 characters in length
+WHERE CustomerName LIKE 'a__%'		Finds any values that start with "a" and are at least 3 characters in length
+WHERE ContactName LIKE 'a%o'		Finds any values that start with "a" and ends with "o"
+
+Examples
+SELECT * FROM details WHERE name LIKE 'd%';
+SELECT * FROM details WHERE name LIKE '%y';
+SELECT * FROM details WHERE name LIKE '%sh%';
+SELECT * FROM details WHERE name LIKE 'a%h';
+
+

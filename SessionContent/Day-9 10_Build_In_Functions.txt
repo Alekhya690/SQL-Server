@@ -1,0 +1,226 @@
+Build in functions in sql server
+
+
+DAY-9
+
+Following are the Stringfunctions in sql server
+
+
+1) ASCII: returns the ASCII value for the specific character.			
+Syntax: ASCII(character)
+Example: 
+SELECT name, ASCII(name) AS NumCode FROM details;
+Select ASCII("Phani")
+
+2) CHAR: Returns the character based on the ASCII code	
+Syntax: CHAR(code)
+Example: SELECT CHAR(72) AS CodeToCharacter;
+
+		
+3) CHARINDEX: Returns the position of a substring in a string
+Syntax: CHARINDEX(substring, string, start)
+
+Parameter	Description
+substring	Required. The substring to search for
+string		Required. The string to be searched
+start		Optional. The position where the search will start (if you do not want to start at the beginning of string). The first position in string is 1	
+	
+Example: SELECT CHARINDEX('h', 'Alekhya') AS MatchPosition;
+
+
+4) CONCAT: Adds two or more strings together
+Syntax: CONCAT(string1, string2, ...., string_n)
+Example: SELECT CONCAT('Sphoorthi', ' Oum '); CONCAT(string1, string2, ...., string_n)
+			
+5) Concat with + : Adds two or more strings together
+Syntax: string1 + string2 + string_n
+Example: SELECT 'Sphoorthi' + 'Oum';
+		
+6) CONCAT_WS : Adds two or more strings together with a separator
+Syntax: CONCAT_WS(separator, string1, string2, ...., string_n)
+Example: SELECT CONCAT_WS('-', 'Sphoorthi', ' Oum', ' to!', 'Everyone');
+		
+7) DATALENGTH: Returns the number of bytes used to represent an expression
+syntax: DATALENGTH(expression)
+Example: SELECT DATALENGTH('Sphoorthi Oum');
+
+8) LEFT	: Extracts a number of characters from a string (starting from left)		
+Syntax: LEFT(string, number_of_chars)
+Example: SELECT LEFT(‘Sphoorthi Summer Classes',  3)  AS ExtractString;
+
+9)LEN: Returns the length of a string
+Syntax: LEN(String)			
+Example: SELECT LEN(‘Sphoorthi');
+
+10)LOWER: Converts a string to lower-case		
+Syntax for Lower: LOWER(text)
+Example:  SELECT LOWER('SQL Tutorial is FUN!');
+
+11) UPPER: Converts a string to upper-case			
+Syntax for Upper: UPPER(text)
+Example:  SELECT UPPER(‘sql tutorial is fun..!’);
+
+12) REPLACE: Replaces all occurrences of a substring within a string, with a new substring			
+REPLACE(string, old_string, new_string)
+Example: SELECT REPLACE('SQL Tutorial', 'SQL', 'HTML');
+
+13) STR: Returns a number as string			
+syntax: STR(Number)
+Example: SELECT STR(185);
+
+14) REVERSE: Reverses a string and returns the result		
+syntax: REVERSE(string)
+Example:  
+SELECT REVERSE('SQL Tutorial');
+SELECT name, REVERSE(name) As 'Reversed String' FROM details;
+
+15) RIGHT: Extracts a number of characters from a string (starting from right)			
+syntax:  RIGHT(string, number_of_chars)
+Example: 
+SELECT RIGHT('SQL Tutorial', 6) AS ExtractString;
+SELECT RIGHT(Department, 2) AS DepartmentName FROM details;
+
+16) SUBSTRING: Extracts some characters from a string		
+Syntax: SUBSTRING(string, start, length)
+Example:  
+SELECT SUBSTRING('SQL Tutorial', 2, 5) AS ExtractString;
+SELECT Department, SUBSTRING(Department, 1, 2) AS DepartmentName FROM details;
+
+17) TRIM: Removes leading and trailing spaces (or other specified characters) from a string			
+Syntax: TRIM([characters FROM ]string)
+Example:  SELECT TRIM('     SQL Tutorial!     ') AS TrimmedString;
+SELECT TRIM('#! ' FROM '    #SQL Tutorial!    ') AS TrimmedString;
+
+18) LTRIM: Removes leading spaces from a string
+Syntax: LTRIM(string)
+Example: SELECT LTRIM('     SQL Tutorial') AS LeftTrimmedString;
+
+19) RTRIM: Removes trailing spaces from a string			
+Syntax: RTRIM(string)
+Example: SELECT RTRIM('SQL Tutorial    ') AS RightTrimmedString;
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+DAY-10
+----------------------------
+
+Math/Numeric Functions
+
+1) ABS: Returns the absolute value of a number
+Syntax: Abs(number)
+Example: SELECT Abs(-243.5) AS AbsNum;
+
+2) ACOS: Returns the arc cosine of a number
+The specified number must be between -1 to 1, otherwise this function returns NULL. 
+Syntax: ACOS(number)
+Example: SELECT ACOS(0.25);
+
+3) ASIN: Returns the arc sine of a number
+The specified number must be between -1 to 1, otherwise this function returns NULL. 
+Syntax:  ASIN(number)
+Example:  SELECT ASIN(-0.8);
+
+4) ATAN: Returns the arc tangent of a number
+Syntax: ATAN(number)
+Example: SELECT ATAN(-45.01);
+
+5) ATN2() : Returns the arc tangent of two numbers.
+Syntax: ATN2(a, b)
+Example:  SELECT ATN2(0.50, 1);
+
+6) AVG: Returns the average value of an expression
+NULL values are ignored. 
+Syntax:  AVG(expression)
+Example:  SELECT AVG(Salary) AS AverageSalary FROM details;
+
+7) MAX: To find max values of the column
+Syntax: MAX(expression)
+Example:  SELECT MAX(Salary) AS MaxSalary FROM details;
+
+8) MIN: To fine min values of the column
+Syntax: MIN(expression)
+Example: SELECT MIN(Salary) AS MINSalary FROM details;
+
+9) RAND(): It returns a random number between 0 and 1.
+Example: SELECT RAND();
+
+10) SQRT():  function returns the square root of a number.
+Syntax: SQRT(number)
+Example:  SELECT SQRT(64);
+
+11) SQUARE():  Returns the square of a number.
+Syntax: SQUARE(number)
+Example:  SELECT SQUARE(4);
+--------------------------------------
+SQL Server Date Functions
+
+1) CURRENT_TIMESTAMP : It  returns the current date and time, in a 'YYYY-MM-DD hh:mm:ss.mmm' format.
+Example:  SELECT CURRENT_TIMESTAMP;
+
+2) ISDATE():  It checks an expression and returns 1 if it is a valid date, otherwise 0.
+Syntax: ISDATE(expression)
+Example: SELECT ISDATE('2017-08-25');
+SELECT ISDATE('2017');
+SELECT ISDATE('Hello ');
+
+3) DAY(): It returns the day of the month (from 1 to 31) for a specified date.
+Syntax:  DAY(date)
+Example:  SELECT DAY('2017/08/13 09:08') AS DayOfMonth;
+
+4) MONTH() : Returns the month part for a specified date (a number from 1 to 12).
+Syntax: MONTH(date)
+Example: SELECT MONTH('2017/05/25 09:08') AS Month;
+
+5) YEAR() : It returns the year part for a specified date.
+Syntax: YEAR(date)
+Example: SELECT YEAR('2017/08/25') AS Year; 
+
+6) SYSDATETIME() : It returns the date and time of the computer where the SQL Server is running.
+Syntax: SYSDATETIME()
+Example: SELECT SYSDATETIME() AS SysDateTime;
+---------------------------
+
+SQL Server Advanced Functions
+
+1) USER_NAME:  It returns the database user name based on the specified id.
+If no id is specified, this function will return the name of the current user.
+Syntax:  USER_NAME(id_number)
+Example:  SELECT USER_NAME();
+
+2) SYSTEM_USER:  Returns the login name for the current user.
+Syntax:  SYSTEM_USER
+Example: SELECT SYSTEM_USER;
+
+3) SESSION_USER:  Returns the name of the current user in the SQL Server database.
+Syntax: SESSION_USER
+Example: SELECT SESSION_USER;
+
+4) NULLIF():  Returns NULL if two expressions are equal, otherwise it returns the first expression.
+Syntax:  NULLIF(expr1, expr2)
+Example:  SELECT NULLIF(25, 25);
+SELECT NULLIF('Hello', 'Hello');
+SELECT NULLIF('Hello', 'world');
+
+5) ISNUMERIC:  It tests whether an expression is numeric.
+This function returns 1 if the expression is numeric, otherwise it returns 0.
+Syntax:  ISNUMERIC(expression)
+Example: 
+SELECT ISNUMERIC(4567);
+SELECT ISNUMERIC('Hello world!');
+SELECT ISNUMERIC(20*3);
+
+6) ISNULL():  It returns a specified value if the expression is NULL.
+If the expression is NOT NULL, this function returns the expression.
+Syntax: ISNULL(expression, value)
+Example:  
+SELECT ISNULL(NULL, 'Sphoorthi Oum');
+SELECT ISNULL('Sri Guru', 'Viswa Sphoorthi');
+SELECT ISNULL(NULL, 500);
+
+7) IIF(): Returns a value if a condition is TRUE, or another value if a condition is FALSE.
+Syntax:  IIF(condition, value_if_true, value_if_false)
+Example: 
+SELECT IIF(500<1000, 'YES', 'NO');
+SELECT IIF(500<1000, 5, 10);
+SELECT name, Department, IIF(age>25, 'age is > 25', 'age is < 25')FROM details;
+
+

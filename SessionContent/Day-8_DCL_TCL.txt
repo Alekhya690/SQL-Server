@@ -1,0 +1,84 @@
+ANY and ALL Operators
+
+These are used with a WHERE or HAVING clause.
+ANY:  Operator returns true if any of the sub query values meet the condition.
+ALL: Operator returns true if all of the sub query values meet the condition.
+Example for ANY
+SELECT name, Department FROM details WHERE Id = ALL (SELECT StudentID FROM StudentInfo WHERE StudentID = 2 OR StudentID = 10);
+SELECT name, Department FROM details WHERE Id = ANY (SELECT StudentID FROM StudentInfo WHERE StudentID = 2 OR StudentID = 4);
+
+Sting Concatenation Operator
+
+An operator in a string expression that concatenates two or more character or strings to one expression (a string operator)
+Example
+'book'+'case'; returns bookcase.
+SELECT (Name + ' , ' + Department ) AS PersonDetails  FROM details
+----------------------------------------------------------------------------
+DCL –Data Control Language
+
+DCL commands are used to grant and take back authority from any database user.
+
+Here are some commands that come under DCL:Grant, Revoke
+
+Grant
+It is used to give user access privileges to a database.
+Example
+GRANT SELECT, UPDATE ON MY_TABLE TO SOME_USER, ANOTHER_USER; 
+
+Revoke
+It is used to take back permissions from the user.
+Example 
+REVOKE SELECT, UPDATE ON MY_TABLE FROM USER1, USER2; 
+----------------------------------------------------------------------------
+TCL-Transaction Control Language
+
+TCL commands can only use with DML commands like INSERT, DELETE and UPDATE .
+These operations are automatically committed in the database that's why they cannot be used while creating tables or dropping them.
+Here are some commands that come under TCL:
+COMMIT
+ROLLBACK
+SAVEPOINT
+
+Commit
+
+It is used to save all the transactions to the database.
+Syntax
+begin tran<tran_name>
+	SQL Command
+Commit tran <tran_name>
+
+Example
+begin tran d  
+		INSERT into details values (‘11','Akshi', ‘    ‘23', '25333', 'Developer')
+commit tran d 
+
+
+Rollback in SQL Server
+ 
+Rollback is used to undo the changes made by any command but only before a commit is done. We can't Rollback data which has been committed in the database with the help of the commit keyword.
+ 
+Syntax
+ 
+begin tran tranName
+Command for operation
+Rollback tran tranName
+
+SAVEPOINT
+
+SAVEPOINT command is used to temporarily save a transaction so that you can rollback to that point whenever required.
+With out saveback we cannot roalback.
+
+Syntax
+SAVE { TRAN | TRANSACTION } { savepoint_name | @savepoint_variable } [ ; ] 
+Example
+SAVE  TRANSACTION  FirstInsert
+
+----------------------------------------------------------------------------
+Example for ROLLBACK & SAVEPOINT
+
+BEGIN TRANSACTION 
+INSERT into details values ('16','geetha', '20', '253333', 'Admin')
+SAVE TRANSACTION FirstInsert
+INSERT into details values ('17','geetha', '20', '253333', 'Admin')
+ROLLBACK TRANSACTION FirstInsert
+COMMIT

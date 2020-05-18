@@ -1,0 +1,117 @@
+Subquery
+
+Subquery can be simply defined as a query within another query. 
+Subquery is a query that is embedded in WHERE clause of another SQL query.
+
+Key points of Subquery
+
+Subquery’s can be used any number of SQL clauses:  WHERE, HAVING, FROM clause.
+It can be used with SELECT, UPDATE, INSERT, DELETE statements , along with following operators: =, >, =, <= and Like operator.
+A subquery is a query within another query. The outer query is called as main query and inner query is called as subquery.
+The subquery generally executes first, and its output is used to complete the query condition for the main or outer query.
+Subquery must be enclosed in parentheses.
+
+Types of Subquries
+
+Single Row Subqueries
+Multiple Row and Column
+Correlated Subqueries
+Nested Subqueries
+
+------------------------------------------------------------------------------------------------------------------------------------
+1) Single Row Subqueries
+
+A single row subquery returns zero or one row to the outer SQL statement. 
+Example:
+SELECT Name, Department FROM Details WHERE Id = (SELECT Id FROM Details WHERE Name = 'Alex');
+Error Scenario: 
+SELECT Name, Department FROM Details WHERE Id =  (SELECT Id FROM Details WHERE name LIKE '%a%');
+“Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.”
+
+2) Multiple Row and Column
+
+Multiple row subquery returns one or more rows to the outer SQL statement. 
+We may use the IN, ANY, or ALL operator in outer query to handle a subquery that returns multiple rows.
+Example using IN operator
+IN operator is used to check a value within a set of values. The list of values may come from the results returned by a subquery. 
+SELECT Name, Department FROM Details WHERE Id =  (SELECT Id FROM Details WHERE name LIKE '%a%');
+
+Example Using NOT IN operator
+You can also use NOT IN operator to perform the logical opposite of IN operator.
+SELECT Name, Department FROM Details WHERE Id NOT IN  (SELECT Id FROM Details WHERE name LIKE '%a%');
+
+Example Using ANY operator
+You can use the ANY operator to compare a value with any value in a list. 
+You must place an =, <>, >, <, <= or >= operator before ANY in your query.
+SELECT Name, Department FROM Details WHERE Id = ANY (SELECT Id FROM Details WHERE name LIKE '%a%');
+
+
+3) Correlated Subqueries
+
+Subquery that depends on the outer query for its values. 
+These subquery is known as a correlated because the subquery depends on the outer queries for execution. 
+These executed repeatedly, once for each row evaluated by the outer query. The correlated subquery is also known as a repeating subquery.
+
+Example1
+SELECT a.Id as DetailsID, a.Name, a.Department FROM details a WHERE a.Id=ANY(SELECT b.StudentId FROM StudentInfo b WHERE b.name='Harry');
+SELECT Id, Name, Department FROM details a WHERE Id =
+	ANY(SELECT StudentId FROM StudentInfo b  WHERE b.name=a.Name);
+
+EXISTS Operator
+The EXISTS checks the existence of a result of a Subquery. 
+The EXISTS subquery tests whether a subquery fetches at least one row or not. 
+When no data is returned then this operator returns 'FALSE'.
+Example
+SELECT Id, Name, Department FROM details a WHERE Exists 
+(SELECT StudentId FROM StudentInfo b WHERE b.name=a.Name and a.Id=b.StudentID);
+
+
+4) Nested Subqueries
+
+Multiple child queries inside one parent query
+
+Example
+SELECT Department, AVG(Salary) FROM details GROUP BY  Department   HAVING AVG(salary)> ANY
+(SELECT salary FROM details where salary='5000‘ and Id in (Select StudentID from StudentInfo where StudentID BETWEEN 5 AND 8)) 
+----------------------------------------------------------------------------------------------------------------------------------
+We can use sub queries with INsert, update, delete and Select commands
+
+a) Syntax with Insert
+
+INSERT INTO table_name (column1, column2, column3....)   SELECT *  FROM table_name  WHERE VALUE OPERATOR 
+Example
+INSERT INTO details2  SELECT * FROM  details WHERE age >22;
+
+b) Syntax with Delete
+
+DELETE FROM TABLE_NAME [ WHERE OPERATOR [ VALUE ] (SELECT COLUMN_NAME FROM TABLE_NAME) [ WHERE) ]
+Example
+DELETE FROM details2 WHERE Id=ANY
+(SELECT Id FROM details WHERE Salary='4000');
+
+c) Syntax with select
+
+Syntax with Select
+SELECT column_name  FROM table_name   WHERE column_name expression operator  ( SELECT column_name  from table_name WHERE ... );  
+Example
+SELECT * FROM StudentInfo where name IN  (Select name from details where age >20 )
+
+SELECT s.StudentID, s.name, phone FROM StudentInfo s, details d 
+where s.name =d.Name AND d.age >20
+
+---------------------------------------------------------------------------
+
+Examples
+
+
+1) Write a query to display the name, age, department for those employees who gets more salary than the employee whose id is 9.
+
+Solution: SELECT Name, age, Salary FROM details WHERE Salary > ( SELECT salary FROM details WHERE id=7);
+
+2) Write a query to display the name, department, Salary for those employees who works in the same department as the employee works whose id is 2.
+
+Solution: SELECT Name, Department, Salary FROM details where Department = (SELECT Department FROM details WHERE id=2)
+
+3) Write a query to display all the details for those employees who earn such amount of salary which is the smallest salary of any of the departments.
+
+Solution: Select Name, age, Department, Salary from details where Salary IN (Select MIN(Salary) from details GROUP BY Department)

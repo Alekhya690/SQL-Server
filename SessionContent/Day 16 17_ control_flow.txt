@@ -1,0 +1,363 @@
+Control-of-Flow
+
+Definition
+You can control the flow of execution.
+The Transact-SQL control-of-flow language keywords are...
+BEGIN...END 
+Table-valued Functions with RETURN
+BREAK
+THROW
+CONTINUE
+TRY…CATCH
+GOTO label
+WAITFOR
+IF...ELSE
+WHILE
+
+BEGIN...END
+The BEGIN...END statement is used to define a statement block. 
+A statement block consists of a set of SQL statements that execute together.  This statement block is also known as a batch.
+BEGIN...END blocks can be nested.
+All Transact-SQL statements are valid within a BEGIN...END block.  
+
+Syntax:
+BEGIN  
+    { sql_statement | statement_block }   
+END 
+
+-------------------------------------------
+Example for BEGIN …..END Block
+
+BEGIN
+	    SELECT Name, Department       
+ 	    FROM Details
+	     WHERE Salary > 300000;
+         IF @@ROWCOUNT = 0
+	        PRINT 'No Employee name is found with salary grater than 30000.';
+END
+
+--------------------------------------
+Example for BEGIN …..END Block
+
+BEGIN
+	    SELECT Name, Department       
+ 	    FROM Details
+	     WHERE Salary > 300000;
+         IF @@ROWCOUNT = 0
+	        PRINT 'No Employee name is found with salary grater than 30000.';
+END
+--------------------------------------------
+Example for nested BEGIN.. END Block
+BEGIN
+	    DECLARE @employeeName VARCHAR(MAX);
+	    SELECT TOP 1 @employeeName = name 
+	    FROM details 
+	    ORDER BY age  DESC; 
+	    IF @@ROWCOUNT <> 0
+	    BEGIN
+	        PRINT 'The Most aged person is:  ' + @employeeName
+	    END
+	    ELSE
+	    BEGIN
+	        PRINT 'No Employee found in given condition';
+	    END;
+ END
+---------------------------------------------
+
+Table-valued Functions
+A table-valued function is a user-defined function that returns data of a table type. 
+The return type of a table-valued function is a table, therefore.
+
+Types of table valued Functions
+Inline Table-Valued functions 
+Multi-statement Table-Valued Functions (MSTVF).
+
+
+---------------------------------------------------
+
+Creating a table-valued function
+CREATE FUNCTION  firstFunction(
+    @person_salary INT
+)
+RETURNS TABLE
+AS
+RETURN
+	SELECT Name, Department
+	FROM details   
+	WHERE
+		salary > @person_salary;
+
+-----------------------------------------------
+
+Executing a table-valued function
+
+Example 1:
+SELECT *  from firstFunction1(230000);
+
+Example 2:
+Also specify which columns to be returned from the table-valued function.
+
+SELECT Department FRom firstFunction1(230000);
+------------------------------------------------
+Modifying a table-valued function
+To modify a table-valued function, you use the ALTER instead of CREATE keyword. 
+
+Example
+ALTER FUNCTION firstFunction1 (
+		 @fromSalary money,
+		 @toSalary money
+)
+RETURNS TABLE
+AS
+RETURN
+	SELECT name,Department, age      
+	FROM details  
+	WHERE
+		salary BETWEEN @fromSalary AND @toSalary
+    
+select * from firstFunction1(4000, 5000)
+---------------------------------------------------
+The following statement calls the udfProductInYear function to get the products whose model years are between 2017 and 2018.
+Example
+SELECT 
+    product_name,
+    model_year,
+    list_price
+FROM 
+    udfProductInYear(2017,2018)
+ORDER BY
+    product_name;
+
+---------------------------------------------------
+Loops
+
+It is a iterative control statement that allows you to execute a sequence of statements repeatedly like WHILE and FOR loop.
+Syntax: 
+LOOP 
+	sequence_of_statements; 
+END LOOP;
+Note:
+There must be at least one executable statement between LOOP and END LOOP keywords. 
+The sequence of statements is executed repeatedly until it reaches a loop exit. 
+PL/SQL provides EXIT and EXIT-WHEN statements to allow you to terminate a loop.
+
+----------------------------------------------------------
+
+Exit
+The EXIT forces the loop halts execution unconditionally and passes control to the next statement after the LOOP statement. 
+We use the EXIT statement with the IF statement.
+Syntax
+LOOP
+	  sequence_of_statements; 
+	... EXIT; 
+END LOOP;
+---------------------------------------------------------
+
+EXIT-WHEN 
+This statement allows the loop to terminate conditionally. 
+When the EXIT-WHEN statement is reached, the condition in the WHEN clause is checked. 
+If the condition evaluates to TRUE, the loop is terminated and control  is passed to the next statement after the keyword END LOOP. 
+If the condition evaluates to FALSE, the loop will continue repeatedly until the condition evaluates to TRUE. 
+Syntax
+LOOP 
+	... EXIT WHEN condition; 
+END LOOP;
+
+---------------------------------------------------------
+
+WHILE
+WHILE statement to execute a statement block repeatedly based on a specified condition.
+Syntax
+WHILE Boolean_expression   
+     { sql_statement | statement_block}
+Example
+DECLARE @counter INT = 1;
+WHILE @counter <= 5
+BEGIN
+    PRINT @counter;
+    SET @counter = @counter + 1;
+END
+
+------------------------------------------------------
+BREAK
+BREAK statement to immediately exit from the loop.
+Syntax
+WHILE Boolean_expression
+BEGIN
+    -- statements
+   IF condition
+        BREAK;
+    -- other statements    
+END
+
+Nested while
+WHILE Boolean_expression1 
+BEGIN -- statement 
+	WHILE Boolean_expression2 
+	BEGIN 
+		IF condition 
+		BREAK; 
+	END 
+END
+Note:  Break terminates only inner loop
+
+
+------------------------------------------------
+
+Example of break
+DECLARE @counter INT = 0; 
+WHILE @counter <= 5 
+BEGIN 
+	SET @counter = @counter + 1;
+ 	IF @counter = 4 
+		BREAK; 
+	PRINT @counter; 
+END
+
+--------------------------------------------
+
+Continue
+
+CONTINUE statement to control the flow of the loop.
+Syntax
+WHILE Boolean_expression
+BEGIN
+    -- code to be executed
+    IF condition
+        CONTINUE;
+    -- code will be skipped if the condition is met
+END
+Example
+DECLARE @counter INT = 0;
+
+WHILE @counter < 5
+BEGIN
+    SET @counter = @counter + 1;
+    IF @counter = 3
+        CONTINUE;	
+    PRINT @counter;
+END  
+
+
+-------------------------------------------------
+Try-catch
+
+TRY CATCH construct to handle exceptions in stored procedures.
+Syntax
+BEGIN TRY  
+   -- statements that may cause exceptions
+END TRY 
+BEGIN CATCH  
+   -- statements that handle exception
+END CATCH
+
+------------------------------------------------
+
+The CATCH block functions
+To get the detailed information on the error these functions are used. 
+
+ERROR_LINE() returns the line number on which the exception occurred.
+ERROR_MESSAGE() returns the complete text of the generated error message.
+ERROR_PROCEDURE() returns the name of the stored procedure or trigger where the error occurred.
+ERROR_NUMBER() returns the number of the error that occurred.
+ERROR_SEVERITY() returns the severity level of the error that occurred.
+ERROR_STATE() returns the state number of the error that occurred.
+
+---------------------------------------------------
+Example
+CREATE PROC usp_divide(
+    @a decimal,
+    @b decimal,
+    @c decimal output
+) AS
+BEGIN
+    BEGIN TRY
+        SET @c = @a / @b;
+    END TRY
+    BEGIN CATCH
+        SELECT  
+            ERROR_NUMBER() AS ErrorNumber  
+            ,ERROR_SEVERITY() AS ErrorSeverity  
+            ,ERROR_STATE() AS ErrorState  
+            ,ERROR_PROCEDURE() AS ErrorProcedure  
+            ,ERROR_LINE() AS ErrorLine  
+            ,ERROR_MESSAGE() AS ErrorMessage;  
+    END CATCH
+END;
+GO
+
+-----------------------------------------------------------
+
+THROW
+THROW statement is use to raise an exception
+Syntax
+THROW [ error_number , message , state ];
+
+error_number
+The error_number is an integer that represents the exception. 
+The error_number must be greater than 50,000 and less than or equal to 2,147,483,647.
+message
+It is the type string , NVARCHAR(2048) that describes the exception.
+state
+The state is a TINYINT with the value between 0 and 255. 
+The state indicates the state associated with the message.
+Example:  THROW 50005, N'An error occurred', 1;
+
+
+-------------------------------------------------------------
+IF…ELSE
+IF...ELSE statement to control the flow of program
+
+Syntax 1 (only IF)
+IF boolean_expression   
+BEGIN
+    { statement_block }
+END
+
+Syntax 2 (IF… ELSE)
+IF Boolean_expression
+BEGIN
+    -- Statement block executes when the Boolean expression is TRUE
+END
+ELSE
+BEGIN
+    -- Statement block executes when the Boolean expression is FALSE
+END
+-----------------------------------------------------------
+
+Example
+BEGIN
+	DECLARE @avgAge INT;
+	SELECT @avgAge = AVG(age)  
+    FROM
+        	details
+		GROUP BY Department  
+    SELECT @avgAge;
+    IF @avgAge < 21
+    BEGIN
+        PRINT 'Age is not sufficient';
+    END
+	ELSE
+	BEGIN
+        PRINT 'you are eligible';
+    END
+END
+-------------------------------------------------------
+WAITFOR
+Blocks the execution of a batch, stored procedure,  until a specified time interval.
+Syntax
+WAITFOR   
+{  
+    DELAY 'time_to_pass'   
+  | TIME 'time_to_execute'   
+  | [ ( receive_statement ) | ( get_conversation_group_statement ) ]   
+    [ , TIMEOUT timeout ]  
+}
+Example:  WAITFOR TIME '22:20';
+------------------------------------------------------------------
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+Stored Procedures
+
+A stored procedure is nothing but a series of declarative SQL statements which can be stored in the database.
+A procedure can be thought of as a function or a method. They can be invoked through triggers, other procedures, or in applications.
+
+Advantages:
+They reduce the traffic between the database and the application, since the lengthy statements are already fed into the database and need not be sent again and again via the application.
+This also result in performance improvement of the application.
+They add to code reusability,
+
+Disadvantages of stored procedure :
+
+Stored procedures can cause a lot of memory usage. 
+SQL Server does not provide the functionality of debugging the stored procedures.
+Syntax
+CREATE PROCEDURE procedure_name
+AS 
+BEGIN sql_statement
+	sql_statement
+END
+Note:  We can use CREATE PROCEDURE keyword,  or CREATE PROC to create stored procedure.
+
+Example
+CREATE PROCEDURE testproc
+AS
+BEGIN
+    SELECT 
+        Name, Department
+    FROM 
+        details
+    ORDER BY 
+        Department;
+END;
+------------------------------------------------------------
+Executing a stored procedure
+To execute a stored procedure,  you use the  EXECUTE or EXEC statement followed by the name of the stored procedure:
+
+Syntax
+	EXECUTE <sp_name>; 
+or
+	EXEC <sp_name>;
+------------------------------------------------------
+
+Modifying a stored procedure
+
+To modify an existing stored procedure, you use the ALTER PROCEDURE statement.
+ALTER PROCEDURE testproc
+AS
+BEGIN
+ SELECT 
+	Name, Department
+FROM 
+	details
+ORDER BY 
+	age;
+END;
+------------------------------------------------
+Deleting a stored procedure
+
+To delete a stored procedure, you use the DROP PROCEDURE or DROP PROC statement:
+Syntax:
+	DROP PROCEDURE sp_name; 
+or
+	DROP PROC sp_name;
+-------------------------------------------------
+

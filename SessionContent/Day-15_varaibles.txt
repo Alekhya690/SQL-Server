@@ -1,0 +1,158 @@
+Varaibles
+
+In MS SQL, variables are the object which acts as a placeholder to a memory location. 
+Variable hold single data value of a specific type.
+We use variables in the following cases:
+As a loop counter to count the number of times a loop is performed.
+To hold a value to be tested by a control-of-flow statement such as WHILE.
+To store the value returned by a stored procedure or a function
+
+Types of varaibles
+
+MS SQL has two types of variables.
+Local variable.
+Global variable. 
+
+However, the user can only create a local variable
+
+
+Local variable:
+A user declares the local variable.
+By default, a local variable starts with @.
+Every local variable scope has the restriction to the current batch or procedure within any given session.
+
+Global variable:
+The system maintains the global variable. A user cannot declare them.
+The global variable starts with @@
+It stores session related information.
+
+----------------------------------------------------------
+
+Declaring a variable
+
+To declare a variable, you use the DECLARE statement.
+
+Syntax with AS:
+DECLARE  @<Variable_name> AS <Type_of_Variable>;
+Example
+DECLARE @model_year AS SMALLINT;
+
+Syntax  with out AS:
+DECLARE @<Variable_name> <Type_of_Variable> = <some value>;
+Example:
+DECLARE @model_year SMALLINT;
+
+DECLARE two variables: 
+DECLARE @COURSE_ID AS INT, @COURSE_NAME VARCHAR (10);
+
+Points to remember
+
+Initialization is an optional thing while declaring.
+By default, DECLARE initializes variable to NULL.
+Using the keyword 'AS' is optional.
+To declare more than one local variable, use a comma after the first local variable definition, and then define the next local variable name and its data type.
+
+---------------------------------------------------------------------------------------
+Assigning a value to a variable
+
+For this we have 3 ways
+During variable declaration using DECLARE keyword.
+Using SET
+Using SELECT
+
+1) During variable declaration using DECLARE keyword.
+Syntax: DECLARE @<Variable_name> <Type_of_Variable> = <some value>;
+Example:  DECLARE @COURSE_ID AS INT = 5
+		   PRINT @COURSE_ID
+
+
+2) Using SET: SET can be used to assign values to the variable.
+Syntax: DECLARE @Local_Variable <Data_Type> 
+		SET @Local_Variable = <Value>
+Example:  DECLARE @COURSE_ID AS INT 
+		   SET @COURSE_ID = 5 
+		   PRINT @COURSE_ID
+
+
+
+Assign a value to multiple variables using SET.
+Rule:  One SET Keyword can be used to assign a value to only one      	variable.
+Syntax
+DECLARE @Local_Variable _1 <Data_Type>, @Local_Variable_2 <Data_Type>, 
+SET @Local_Variable_1 = <Value_1> 
+SET @Local_Variable_2 = <Value_2>
+Example
+DECLARE @COURSE_ID as INT,  @COURSE_NAME AS VARCHAR(5) 
+SET @COURSE_ID = 5 
+SET @COURSE_NAME = 'UNIX' 
+PRINT @COURSE_ID 
+PRINT @COURSE_NAME
+
+Assigning a value to a variable with a Scalar Subquery  using SET
+Scalar query : A scalar query is a query with results as just one row and one column. 
+Rules:
+Enclose the query in parenthesis.
+The query should be a scalar query.  Otherwise, the query will throw an error.
+If the query returns zero rows, then the variable is set to EMPTY, i.e., NULL.
+Syntax:  DECLARE @Local_Variable_1 <Data_Type>,     	@Local_Variable_2 <Data_Type>,
+    	        SET @Local_Variable_1 = (SELECT <Column_1> from   	<Table_Name> where <Condition_1>)
+
+Example
+DECLARE @COURSE_NAME1 VARCHAR (10)
+SET @COURSE_NAME1 = (select name from details where Id = 4)
+PRINT @COURSE_NAME1
+
+
+When sub query returns zero row as a result
+Example
+DECLARE @COURSE_NAME1 VARCHAR (10) 
+SET @COURSE_NAME1 = (select name from details where Id = 3)
+PRINT @COURSE_NAME1
+
+3) USING SELECT
+Just like SET, we can also use SELECT to assign values to the variables.
+a) Assigning a value to a variable using SELECT
+Syntax: DECLARE @LOCAL_VARIABLE <Data_Type> 
+	       SELECT @LOCAL_VARIABLE = <Value>
+Example: DECLARE @COURSE_ID INT 
+		  SELECT @COURSE_ID = 5 
+              PRINT @COURSE_ID
+
+
+
+b) Assigning a value to multiple variable using SELECT
+Unlike SET, SELECT can be used to assign a value to multiple variables separated by the comma.
+Syntax:  DECLARE @Local_Variable _1 <Data_Type>, 	@Local_Variable _2 <Data_Type>,
+		SELECT @Local_Variable _1 = <Value_1>,  @Local_Variable _2 = <Value_2>
+Example
+DECLARE @COURSE_ID6 as INT,  @COURSE_NAME2 AS VARCHAR(5)
+SELECT @COURSE_ID6 = 5,  @COURSE_NAME2 = 'SQL Server'
+PRINT @COURSE_ID6
+PRINT @COURSE_NAME2
+
+C) Assigning the value to a variable with a Sub query using SELECT
+
+Syntax: 
+DECLARE @Local_Variable_1 <Data_Type>,  @Local_Variable _2 <Data_Type>, 
+SELECT @Local_Variable _1 = (SELECT <Column_1> from <Table_name> where <Condition_1>)
+
+Example: 
+DECLARE @COURSE_NAME3 VARCHAR (10)
+SELECT @COURSE_NAME3 = (select name from details where Id = 4)
+PRINT @COURSE_NAME3
+
+
+d) Assign a value to a variable with a regular SELECT statement.
+Unlike SET, if the query results in multiple rows then the variable value is set to the value of the last row.
+If the query returns zero rows, then the variable is set to EMPTY, i.e., NULL.
+
+Syntax
+DECLARE @Local_Variable _1 <Data_Type>, @Local_Variable _2 <Data_Type>,
+SELECT @Local_Variable _1 = <Column_1> from <Table_name> where <Condition_1>
+Example
+DECLARE @COURSE_NAME4 VARCHAR (10)
+SELECT @COURSE_NAME4 = name from details where Id = 7
+PRINT @COURSE_NAME4
+
+
+

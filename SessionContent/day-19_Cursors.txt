@@ -1,0 +1,141 @@
+Introduction to SQL cursor
+
+A database cursor is an object that enables traversal over the rows of a result set. 
+It allows you to process individual row returned by a query. 
+A SQL cursor is a database object that is used to retrieve data from a result set one row at a time. 
+A SQL cursor is used when the data needs to be updated row by row.
+
+Cursor Life Cycle
+
+1) Declare a cursor
+To declare a cursor, you specify its name after the DECLARE keyword with the CURSOR data type and provide a SELECT statement that defines the result set for the cursor.
+Syntax
+DECLARE cursor_name CURSOR
+    FOR select_statement;
+
+2. Open the cursor
+A cursor is opened for storing data retrieved from the result set.
+Syntax
+	OPEN cursor_name;
+
+3. FETCH the cursor
+By Iterating the cursor, rows can be fetched from the cursor one by one.
+Syntax
+FETCH NEXT FROM cursor INTO variable_list;
+
+SQL Server provides the @@FETCHSTATUS function that returns the status of the last cursor. 
+If @@FETCHSTATUS returns 0, it means FETCH statement was successful. 
+You can use the WHILE statement to fetch all rows from the cursor as shown in the following code.
+
+Syntax
+WHILE @@FETCH_STATUS = 0  
+    BEGIN
+        FETCH NEXT FROM cursor_name;  
+    END;
+
+4. Close the Cursor
+The cursor should be closed explicitly after data manipulation.
+Syntax
+	CLOSE cursor_name;
+
+5. Deallocate the cursor
+Cursors should be deallocated to delete cursor definition and release all the system resources associated with the cursor.
+Syntax
+DEALLOCATE cursor_name;
+
+Use of a Cursor
+
+In general SELECT statement returns a set of rows which is called a result set. 
+Sometimes the application logic needs to work with one row at a time rather than the entire result set at once., then we will use this cursor concept. 
+
+Example
+
+USE STUDENT
+select * from details
+
+-- cursor example
+DECLARE  -- declaring two varaibles
+    @emp_name VARCHAR(MAX), 
+    @emp_salary   INT;
+
+DECLARE Detailscursor CURSOR
+FOR SELECT 
+        name, Salary
+    FROM 
+        Details
+
+OPEN Detailscursor; -- opening a cursor
+
+FETCH NEXT FROM Detailscursor INTO --fetching data
+    @emp_name, 
+    @emp_salary;
+
+WHILE @@FETCH_STATUS = 0
+    BEGIN
+        PRINT ' Emp name: '+@emp_name+' and Salary: ' + CAST(@emp_salary AS varchar);
+        FETCH NEXT FROM Detailscursor INTO 
+            @emp_name, 
+            @emp_salary;
+    END;
+CLOSE Detailscursor;
+DEALLOCATE Detailscursor;
+
+Limitations of a Cursor
+
+A cursor is a memory resident set of pointers -- meaning it occupies memory from your system that may be available for other processes.
+Cursors can be faster than a while loop but they do have more overhead.
+Another factor affecting cursor speed is the number of rows and columns brought into the cursor. Time how long it takes to open your cursor and fetch statements.
+Too many columns being dragged around in memory, which are never referenced in the subsequent cursor operations, can slow things down.
+The cursors are slower because they update tables row by row. 
+
+How can we replace Cursors
+
+Suppose we have to retrieve data from two tables simultaneously by comparing primary keys and foreign keys. In these types of problems, the cursor gives very poor performance as it processes through each and every column. 
+On the other hand using joins in those conditions is feasible because it processes only those columns which meet the condition. So here joins are faster than cursors
+Example explains (replacement of cursors through joins).
+Suppose, we have two tables, ProductTable and Brand Table. The primary key of BrandTable is brand_id which is stored in ProductTable as foreign key brand_id. 
+
+Now suppose, I have to retrieve brand_name from BrandTable using foreign key brand_id from ProductTable. 
+
+Example
+
+use Product_Database  
+SET NOCOUNT ON;    
+  
+DECLARE @brand_id int     
+DECLARE @brand_name varchar(20)   
+   
+PRINT '--------Brand Details --------';    
+  
+DECLARE brand_cursor CURSOR FOR     
+SELECT distinct(brand_id)  
+FROM ProductTable;   
+  
+OPEN brand_cursor    
+  
+FETCH NEXT FROM brand_cursor     
+INTO @brand_id    
+  
+WHILE @@FETCH_STATUS = 0    
+BEGIN    
+    select brand_id,brand_name from BrandTable where brand_id=@brand_id  
+--(@brand_id is of ProductTable)  
+      
+    FETCH NEXT FROM brand_cursor     
+INTO @brand_id   
+   
+END     
+CLOSE brand_cursor;    
+DEALLOCATE brand_cursor;
+
+The same program can be done using joins as follows:
+Select distinct b.brand_id,b.brand_name from BrandTable b inner join
+ProductTable p on b.brand_id=p.brand_id
+
+Advantage of joins over cursor using above example:
+As we can see from the above example, using joins reduces the lines of code and gives faster performance in case huge records need to be processed.
+
+
+
+
+

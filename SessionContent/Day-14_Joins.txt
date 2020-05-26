@@ -1,0 +1,118 @@
+Joins
+
+JOINS in SQL are commands which are used to combine rows from two or more tables, based on a related column between those tables. 
+We can write nested queries easily with the help of joins.
+
+Types of Joins
+
+Inner Join
+Outer Join
+Left Join
+Right Join
+Full Join
+Cross Join
+Self Join
+
+Inner Join
+
+Returns records that have matching values in both tables.
+Syntax
+SELECT columns 
+FROM table1 
+INNER JOIN table2 
+ON table1.column = table2.column;
+
+General syntax of join
+SELECT column-names
+     FROM table1 JOIN table2
+     ON column1 = column2  WHERE condition
+
+Example 1
+select * from Details d join StudentInfo s 
+   ON d.Id = s.StudentID where s.name = d.Name
+
+Example2
+select * from Details d Inner join StudentInfo s 
+   ON d.Id = s.StudentID where s.name = d.Name
+-------------------------------------------------------------------
+2) Outer Join
+
+Types of Outer Join
+
+Left Join
+Right Join
+Full Outer Join
+
+a) Left Join
+Select records from the first (left-most) table with matching right table records.
+
+Returns all records from the left 
+table, and the matched records 
+from the right table
+
+Syntax for left join 
+SELECT columns 
+FROM table1 
+LEFT JOIN table2 
+ON table1.column = table2.column;
+Example
+select * from Details d left join StudentInfo s ON d.Id = s.StudentID
+
+b) Right Join
+
+Returns all records from the right table, and the matched records from the left table. 
+
+Example for Right join
+SELECT columns 
+FROM table1 
+RIGHT JOIN table2 
+ON table1.column = table2.column;
+Example
+select * from Details d right join StudentInfo s ON d.Id = s.StudentID
+
+c) full outer join
+
+The FULL OUTER JOIN keyword returns all records when there is match in left (table1) or right (table2) table records.
+Example for Right join
+SELECT columns 
+FROM table1 
+FULL OUTER JOIN table2 
+ON table1.column = table2.column;
+Example
+select * from Details d right join StudentInfo s ON d.Id = s.StudentID where s.name = d.Name
+--------------------------------------------------------------------------------------------------------
+Cross join
+
+The SQL CROSS JOIN produces a result set which is the number of rows in the first table multiplied by the number of rows in the second table. This kind of result is called as Cartesian Product.
+
+If WHERE clause is used with CROSS JOIN, it functions like an INNER JOIN
+
+If table 1 has x rows and 
+table 2 has y rows then the 
+result set will be of x*y rows
+
+Syntax for cross join
+SELECT * FROM table1 CROSS JOIN table2;
+
+Example with out where clause
+select * from Details d  CROSS JOIN StudentInfo s 
+Example with where clause
+select * from Details d  CROSS JOIN StudentInfo s where d.Id = s.StudentID 
+--------------------------------------------------------------------------------------------------------
+self join
+
+No Join keyword will be used.
+Tables that join by its self.
+
+Syntax
+SELECT column_name(s)FROM table1 T1, table1 T2WHERE condition;
+Example
+select * from Details d, StudentInfo s where d.Id = s.StudentID
+
+
+
+
+
+e) 
+
+
